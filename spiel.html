@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Schlagrahm-Game – Freddeli</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Made by Freddeli</div>
+    <div class="menu">
+        <a href="index.html">Startseite</a>
+        <a href="shop.html">Webshop</a>
+        <a href="blog.html">Blog</a>
+        <a href="rezepte.html">Rezepte</a>
+        <a href="kommentare.html">Kommentare</a>
+        <a href="story.html">Story</a>
+        <a href="spiel.html">Spiel</a>
+    </div>
+</nav>
+
+<section class="hero page-hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Spielzeit</span>
+        <h1>Schlagrahm-Game</h1>
+        <p class="hero-lead">Steuere den Löffel und fang so viele fallende Schlagrahm-Tropfen wie möglich. Nutze Pfeiltasten oder die Buttons.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header">
+        <div>
+            <h2>Spielanleitung</h2>
+            <p>Halte deinen Löffel unter den fallenden Schlagsahne-Tropfen, um Punkte zu sammeln. Verliere nicht zu viele Tropfen!</p>
+        </div>
+    </div>
+
+    <div class="game-panel">
+        <div class="game-header">
+            <div class="score">Punkte: <span id="score">0</span></div>
+            <div class="lives">Leben: <span id="lives">3</span></div>
+        </div>
+
+        <div class="game-board" id="gameBoard">
+            <div class="player" id="player"></div>
+        </div>
+
+        <div class="game-controls">
+            <button class="game-button" id="leftBtn" type="button">Links</button>
+            <button class="game-button" id="rightBtn" type="button">Rechts</button>
+            <button class="game-button secondary" id="resetBtn" type="button">Neustart</button>
+        </div>
+
+        <p class="game-instructions">Drücke die Pfeiltasten oder die Buttons, um den Löffel zu bewegen. Fang die Cream-Drops, bevor sie den Boden erreichen.</p>
+    </div>
+
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+</section>
+
+<script>
+const board = document.getElementById("gameBoard");
+const player = document.getElementById("player");
+const scoreDisplay = document.getElementById("score");
+const livesDisplay = document.getElementById("lives");
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+let score = 0;
+let lives = 3;
+let playerX = 0;
+let drops = [];
+let boardWidth = 0;
+let boardHeight = 0;
+let playerWidth = 100;
+let running = true;
+let dropTimer = null;
+let dropSpeed = 0.8;
+let speedStep = 0.0025;
+
+function initGame() {
+    const rect = board.getBoundingClientRect();
+    boardWidth = rect.width;
+    boardHeight = rect.height;
+    playerX = (boardWidth - playerWidth) / 2;
+    player.style.left = `${playerX}px`;
+    player.style.bottom = "12px";
+    score = 0;
+    lives = 3;
+    drops.forEach(drop => drop.el.remove());
+    drops = [];
+    running = true;
+    scoreDisplay.textContent = score;
+    livesDisplay.textContent = lives;
+    dropSpeed = 0.8;
+
+    const oldOverlay = board.querySelector('.game-over');
+    if (oldOverlay) {
+        oldOverlay.remove();
+    }
+
+    if (dropTimer) clearInterval(dropTimer);
+    dropTimer = setInterval(createDrop, 650);
+    window.requestAnimationFrame(updateGame);
+}
+
+function createDrop() {
+    if (!running) return;
+    const drop = document.createElement("div");
+    drop.className = "cream";
+    const x = Math.random() * (boardWidth - 36);
+    drop.style.left = `${x}px`;
+    drop.style.top = `-40px`;
+    board.appendChild(drop);
+    drops.push({ el: drop, x, y: -40 });
+}
+
+function updateGame() {
+    if (!running) return;
+    const playerRect = player.getBoundingClientRect();
+    drops = drops.filter(drop => {
+        drop.y += dropSpeed;
+        drop.el.style.top = `${drop.y}px`;
+        dropSpeed += speedStep;
+
+        const dropRect = drop.el.getBoundingClientRect();
+        const caught = dropRect.bottom >= playerRect.top && dropRect.left + 10 < playerRect.right && dropRect.right - 10 > playerRect.left;
+        if (caught) {
+            score += 10;
+            scoreDisplay.textContent = score;
+            drop.el.remove();
+            return false;
+        }
+
+        if (drop.y > boardHeight) {
+            lives -= 1;
+            livesDisplay.textContent = lives;
+            drop.el.remove();
+            if (lives <= 0) {
+                endGame();
+            }
+            return false;
+        }
+        return true;
+    });
+    if (running) {
+        window.requestAnimationFrame(updateGame);
+    }
+}
+
+function movePlayer(direction) {
+    playerX = Math.min(Math.max(playerX + direction * 60, 0), boardWidth - playerWidth);
+    player.style.left = `${playerX}px`;
+}
+
+function endGame() {
+    running = false;
+    clearInterval(dropTimer);
+    const oldOverlay = board.querySelector('.game-over');
+    if (oldOverlay) {
+        oldOverlay.remove();
+    }
+    const message = document.createElement("div");
+    message.className = "game-over";
+    message.innerHTML = `<p>Spielende! Du hast ${score} Punkte erreicht.</p><button class="btn" onclick="initGame()">Nochmal spielen</button>`;
+    board.appendChild(message);
+}
+
+window.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") {
+        event.preventDefault();
+        movePlayer(-1);
+    }
+    if (event.key === "ArrowRight" || event.key === "d" || event.key === "D") {
+        event.preventDefault();
+        movePlayer(1);
+    }
+});
+
+leftBtn.addEventListener("click", () => movePlayer(-1));
+rightBtn.addEventListener("click", () => movePlayer(1));
+resetBtn.addEventListener("click", initGame);
+
+window.addEventListener("load", initGame);
+</script>
+
+</body>
+</html>
