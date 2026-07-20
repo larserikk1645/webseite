@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Webshop – Freddeli</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Made by Freddeli</div>
+    <div class="menu">
+        <a href="index.html">Startseite</a>
+        <a href="blog.html">Blog</a>
+        <a href="rezepte.html">Rezepte</a>
+        <a href="kommentare.html">Kommentare</a>
+        <a href="story.html">Story</a>
+        <a href="spiel.html">Spiel</a>
+    </div>
+</nav>
+
+<section class="hero shop-hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Webshop</span>
+        <h1>Entdecke den großen Freddeli-Shop</h1>
+        <p class="hero-lead">Von der klassischen Sahne bis zur Vorratspackung – alles frisch vom Hof von sKlärli und mit Liebe hergestellt.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header">
+        <div>
+            <h2>Unsere Produktwelt</h2>
+            <p>Wähle aus vielen frischen Produkten und kombiniere traditionelles Flair mit modernen Geschmackserlebnissen.</p>
+        </div>
+        <div class="cart-summary" id="cartInfo">Im Warenkorb: 0 Artikel</div>
+    </div>
+
+    <div class="category-section">
+        <h3 class="category-title">Klassische Schlagrahm-Varianten</h3>
+        <div class="grid product-grid">
+            <article class="product-card">
+                <span class="badge">Klassiker</span>
+                <h3>Schlagrahm Classic</h3>
+                <p>Der cremige Allrounder für Torten, Desserts und Kaffee.</p>
+                <div class="price">€4,90</div>
+                <button class="product-btn" onclick="addToCart('Classic')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Bestseller</span>
+                <h3>Schlagrahm Vanille</h3>
+                <p>Verfeinert mit echter Vanille – ideal für Crêpes und Eis.</p>
+                <div class="price">€5,20</div>
+                <button class="product-btn" onclick="addToCart('Vanille')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Neu</span>
+                <h3>Schlagrahm Kakao</h3>
+                <p>Perfekt für heiße Schokolade, Mousse und Schokokuchen.</p>
+                <div class="price">€5,50</div>
+                <button class="product-btn" onclick="addToCart('Kakao')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Bio</span>
+                <h3>Schlagrahm Natur</h3>
+                <p>Unverfälscht, mild und zu 100 % aus biologischer Milch hergestellt.</p>
+                <div class="price">€5,90</div>
+                <button class="product-btn" onclick="addToCart('Natur')">In den Warenkorb</button>
+            </article>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <h3 class="category-title">Großpackungen & Vorratsets</h3>
+        <div class="grid product-grid">
+            <article class="product-card">
+                <span class="badge">Sparpack</span>
+                <h3>Sparpaket 3x Classic</h3>
+                <p>Drei Portionen klassischer Schlagrahm für deine Lieblingstorten.</p>
+                <div class="price">€13,50</div>
+                <button class="product-btn" onclick="addToCart('3x Classic')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Vorrat</span>
+                <h3>Familienset Vanille</h3>
+                <p>Perfekt für Feste, Kaffee-Kreis und lange Genussmomente.</p>
+                <div class="price">€15,80</div>
+                <button class="product-btn" onclick="addToCart('Familienset Vanille')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Geschenk</span>
+                <h3>Probierbox Mix</h3>
+                <p>Vier Sorten Schlagrahm zum Kennenlernen und Verschenken.</p>
+                <div class="price">€18,90</div>
+                <button class="product-btn" onclick="addToCart('Probierbox Mix')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Premium</span>
+                <h3>Gold Edition</h3>
+                <p>Besonders reichhaltiger Schlagrahm für festliche Gelegenheiten.</p>
+                <div class="price">€7,20</div>
+                <button class="product-btn" onclick="addToCart('Gold Edition')">In den Warenkorb</button>
+            </article>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <h3 class="category-title">Spezialprodukte & Extras</h3>
+        <div class="grid product-grid">
+            <article class="product-card">
+                <span class="badge">Limited</span>
+                <h3>Haselnuss-Schlagrahm</h3>
+                <p>Feiner Nussgeschmack für Kaffee, Kuchen und Desserts.</p>
+                <div class="price">€6,10</div>
+                <button class="product-btn" onclick="addToCart('Haselnuss')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Frisch</span>
+                <h3>Zitronen-Schlagrahm</h3>
+                <p>Leicht, zitrusfrisch und ein toller Begleiter zu Obstsalaten.</p>
+                <div class="price">€6,10</div>
+                <button class="product-btn" onclick="addToCart('Zitrone')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Hofgeheimnis</span>
+                <h3>Karamell-Schlagrahm</h3>
+                <p>Ein Hauch Karamell für Desserts, Saucen und kreative Rezepte.</p>
+                <div class="price">€6,50</div>
+                <button class="product-btn" onclick="addToCart('Karamell')">In den Warenkorb</button>
+            </article>
+            <article class="product-card">
+                <span class="badge">Kombiniert</span>
+                <h3>Schlagrahm & Honig Duo</h3>
+                <p>Ein Set mit zwei Spezialsorten – perfekt für Frühstück und Kuchen.</p>
+                <div class="price">€11,90</div>
+                <button class="product-btn" onclick="addToCart('Duo Honig')">In den Warenkorb</button>
+            </article>
+        </div>
+    </div>
+
+    <div class="availability-banner">
+        <strong>Alle Produkte sind aktuell verfügbar.</strong> Du kannst direkt in den Warenkorb legen und später einfach bestellen.
+    </div>
+
+    <div class="cart-panel">
+        <div class="cart-panel-header">
+            <h3>Dein Warenkorb</h3>
+            <button class="cart-clear-btn" type="button" onclick="clearCart()">Leeren</button>
+        </div>
+        <div id="cartItems" class="cart-items">
+            <p class="empty-cart">Noch keine Produkte im Warenkorb.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">Gesamt: <strong id="cartTotal">€0,00</strong></div>
+            <button class="btn cart-checkout-btn" type="button" onclick="checkout()">Jetzt kaufen</button>
+        </div>
+    </div>
+
+    <div class="shop-note">
+        <p>Alle Produkte stammen aus unserem Hofbetrieb und werden mit viel Sorgfalt hergestellt. sKlärli sorgt dafür, dass jede Charge besonders gut wird.</p>
+    </div>
+
+    <a class="btn" href="index.html">Zurück zur Startseite</a>
+</section>
+
+<script>
+const products = {
+    Classic: { name: "Schlagrahm Classic", price: 4.9 },
+    Vanille: { name: "Schlagrahm Vanille", price: 5.2 },
+    Kakao: { name: "Schlagrahm Kakao", price: 5.5 },
+    Natur: { name: "Schlagrahm Natur", price: 5.9 },
+    "3x Classic": { name: "Sparpaket 3x Classic", price: 13.5 },
+    "Familienset Vanille": { name: "Familienset Vanille", price: 15.8 },
+    "Probierbox Mix": { name: "Probierbox Mix", price: 18.9 },
+    "Gold Edition": { name: "Gold Edition", price: 7.2 },
+    Haselnuss: { name: "Haselnuss-Schlagrahm", price: 6.1 },
+    Zitrone: { name: "Zitronen-Schlagrahm", price: 6.1 },
+    Karamell: { name: "Karamell-Schlagrahm", price: 6.5 },
+    "Duo Honig": { name: "Schlagrahm & Honig Duo", price: 11.9 }
+};
+
+function getCart() {
+    return JSON.parse(localStorage.getItem("cart") || "[]");
+}
+
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function formatPrice(value) {
+    return new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "EUR"
+    }).format(value);
+}
+
+function updateCartInfo() {
+    const cart = getCart();
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById("cartInfo").innerText =
+        `Im Warenkorb: ${count} Artikel`;
+}
+
+function renderCart() {
+    const cart = getCart();
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    if (!cart.length) {
+        cartItems.innerHTML = '<p class="empty-cart">Noch keine Produkte im Warenkorb.</p>';
+        cartTotal.innerText = formatPrice(0);
+        return;
+    }
+
+    cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <div>
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
+            </div>
+            <div class="cart-item-controls">
+                <button type="button" onclick="changeQuantity('${item.name}', -1)">-</button>
+                <span>${item.quantity}</span>
+                <button type="button" onclick="changeQuantity('${item.name}', 1)">+</button>
+            </div>
+        </div>
+    `).join("");
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    cartTotal.innerText = formatPrice(total);
+}
+
+function addToCart(item) {
+    const product = products[item];
+    if (!product) return;
+
+    const cart = getCart();
+    const existing = cart.find((entry) => entry.name === product.name);
+
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    saveCart(cart);
+    updateCartInfo();
+    renderCart();
+}
+
+function changeQuantity(itemName, delta) {
+    const cart = getCart()
+        .map((item) => item.name === itemName ? { ...item, quantity: item.quantity + delta } : item)
+        .filter((item) => item.quantity > 0);
+
+    saveCart(cart);
+    updateCartInfo();
+    renderCart();
+}
+
+function clearCart() {
+    saveCart([]);
+    updateCartInfo();
+    renderCart();
+}
+
+function checkout() {
+    const cart = getCart();
+    if (!cart.length) {
+        alert("Dein Warenkorb ist noch leer.");
+        return;
+    }
+
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    alert(`Vielen Dank! ${totalItems} Artikel werden für dich vorbereitet.`);
+    clearCart();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    updateCartInfo();
+    renderCart();
+});
+</script>
+
+</body>
+</html>
