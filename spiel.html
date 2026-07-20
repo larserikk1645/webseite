@@ -58,6 +58,35 @@
     <a class="btn" href="index.html">Zurück zur Startseite</a>
 </section>
 
+<section class="section">
+    <div class="section-header">
+        <div>
+            <h2>Schnick-Schnack-Schnuck</h2>
+        <p>Spiele gegen den Hof und ziehe mit „Schere“, „Stein“ oder „Papier“ einen Punkt. Wenn du beim ersten Mal verlierst, zählt es nicht und du kannst direkt neu starten.</p>
+        </div>
+    </div>
+
+    <div class="game-panel">
+        <div class="game-header">
+            <div class="score">Punkte: <span id="rpsScore">0</span></div>
+            <div class="lives">Verluste ohne Zählung: <span id="rpsFreeLosses">1</span></div>
+        </div>
+
+        <div class="rps-board" id="rpsBoard">
+            <div class="rps-result" id="rpsResult">Wähle dein Symbol!</div>
+        </div>
+
+        <div class="game-controls">
+            <button class="game-button" type="button" onclick="playRps('schere')">Schere</button>
+            <button class="game-button" type="button" onclick="playRps('stein')">Stein</button>
+            <button class="game-button" type="button" onclick="playRps('papier')">Papier</button>
+            <button class="game-button secondary" type="button" onclick="resetRps()">Neu starten</button>
+        </div>
+
+        <p class="game-instructions">Wenn du beim ersten Versuch verlierst, wird der Verlust nicht gezählt und der Rundenzähler bleibt stehen. Danach gilt jedes weitere Unentschieden oder Verlieren als normal.</p>
+    </div>
+</section>
+
 <script>
 const board = document.getElementById("gameBoard");
 const player = document.getElementById("player");
@@ -183,6 +212,54 @@ rightBtn.addEventListener("click", () => movePlayer(1));
 resetBtn.addEventListener("click", initGame);
 
 window.addEventListener("load", initGame);
+
+const rpsScoreDisplay = document.getElementById("rpsScore");
+const rpsFreeLossesDisplay = document.getElementById("rpsFreeLosses");
+const rpsResult = document.getElementById("rpsResult");
+
+let rpsScore = 0;
+let rpsFreeLosses = 1;
+
+function resetRps() {
+    rpsScore = 0;
+    rpsFreeLosses = 1;
+    rpsScoreDisplay.textContent = rpsScore;
+    rpsFreeLossesDisplay.textContent = rpsFreeLosses;
+    rpsResult.textContent = "Wähle dein Symbol!";
+}
+
+function playRps(playerChoice) {
+    const choices = ['schere', 'stein', 'papier'];
+    const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+    const rules = {
+        schere: { stein: 'lose', papier: 'win' },
+        stein: { papier: 'lose', schere: 'win' },
+        papier: { schere: 'lose', stein: 'win' }
+    };
+
+    const result = rules[playerChoice][computerChoice];
+
+    if (result === 'win') {
+        rpsScore += 1;
+        rpsScoreDisplay.textContent = rpsScore;
+        rpsResult.textContent = `Du gewinnst! Der Hof sagt ${computerChoice}.`;
+    } else if (result === 'lose') {
+        if (rpsFreeLosses > 0) {
+            rpsFreeLosses -= 1;
+            rpsFreeLossesDisplay.textContent = rpsFreeLosses;
+            rpsResult.textContent = `Erster Verlust zählt nicht. Der Hof sagt ${computerChoice}.`;
+        } else {
+            rpsScore -= 1;
+            rpsScoreDisplay.textContent = rpsScore;
+            rpsResult.textContent = `Verloren! Der Hof sagt ${computerChoice}.`;
+        }
+    } else {
+        rpsResult.textContent = `Unentschieden! Beide haben ${playerChoice}.`;
+    }
+}
+
+resetRps();
 </script>
 
 </body>
